@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Add</title>
 </head>
-<body>
+<body th:align="center">
     <form method="post" th:action="@{/add}" th:object="${newUser}">
         <span>Name</span>
         <input type="text" th:field="*{name}" id="name"/>

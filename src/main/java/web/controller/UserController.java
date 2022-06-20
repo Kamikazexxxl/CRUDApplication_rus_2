@@ -1,4 +1,4 @@
-package web.Controller;
+package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/remove/{id}")
-    public String removeUser(@PathVariable(value = "id") long id) {
+    public String removeUser(@PathVariable(value = "id") int id) {
         userService.deleteUser(id);
         return "redirect:/";
     }
@@ -34,21 +34,21 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addNewUserPost(@ModelAttribute(value = "newUser") User user) {
-        userService.addUser(user);
+    public String createNewUser(@ModelAttribute User user, Model model) {
+        userService.addUser(user.getName(), user.getSurname(), user.getAge());
         return "redirect:/";
     }
 
     @GetMapping(value = {"/edit/{id}"})
-    public String editNewUserGet(Model model, @PathVariable(value = "id") long id) {
+    public String editNewUserGet(Model model, @PathVariable(value = "id") int id) {
         User user = userService.getUser(id);
         model.addAttribute("user", user);
         return "edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String editNewUserPost(@ModelAttribute(value = "user") User user) {
-        userService.editUser(user);
+    public String editUser(@PathVariable("id") int id, @ModelAttribute User user, Model model) {
+        userService.editUser(id, user.getName(), user.getSurname(), user.getAge());
         return "redirect:/";
     }
 

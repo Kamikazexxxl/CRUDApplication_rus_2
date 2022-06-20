@@ -1,65 +1,51 @@
 package web.service;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import web.dao.UserDao;
 import web.model.User;
-import web.repository.UserRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
+
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
-
-    private UserRepository repoSpringData;
+    private final UserDao userDao;
 
     @Autowired
-    public void setRepoSpringData(UserRepository repoSpringData) {
-        this.repoSpringData = repoSpringData;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
-    @Transactional
-    public void addUser(User user) {
-        repoSpringData.save(user);
-    }
-
-    @Override
-    @Transactional
-    public void addUser(String name, String surname, Integer age) {
-
-        repoSpringData.save(new User(name, surname, age));
-    }
-
-    @Override
-    @Transactional
-    public void editUser(User user) {
-
-        repoSpringData.findById(user.getId()).get();
-        repoSpringData.save(user);
-    }
-
-    @Override
-    @Transactional
-    public void deleteUser(long id) {
-
-        repoSpringData.deleteById(id);
-    }
-
-    @Override
-    @Transactional
     public List<User> getAllUsers() {
-
-        return StreamSupport.stream(repoSpringData.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-
+        return userDao.getAllUsers();
     }
 
     @Override
-    public User getUser(long id) {
 
-        return repoSpringData.findById(id).get();
+    public void addUser(String name, String surname, int age) {
+        userDao.addUser(name, surname, age);
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        userDao.deleteUser(id);
+    }
+
+    @Override
+    public User getUser(int id) {
+        return userDao.getUser(id);
+    }
+
+    @Override
+    public void editUser(int id, String name, String surname, int age) {
+        userDao.editUser(id, name, surname, age);
     }
 }

@@ -1,15 +1,12 @@
 package web.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column
     private String name;
@@ -18,12 +15,12 @@ public class User {
     private String surname;
 
     @Column
-    private Integer  age;
+    private int age;
 
     public User() {
     }
 
-    public User(String name, String surname, Integer  age) {
+    public User(String name, String surname, int age) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -33,7 +30,7 @@ public class User {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -53,11 +50,11 @@ public class User {
         this.surname = surname;
     }
 
-    public Integer  getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(Integer  age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

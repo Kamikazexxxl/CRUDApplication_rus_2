@@ -1,10 +1,10 @@
-package web.service;
+package web.dao;
 
 import web.model.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserDao {
     List<User> getAllUsers();
     void addUser(String name, String surname, int age);
     void deleteUser(int id);
